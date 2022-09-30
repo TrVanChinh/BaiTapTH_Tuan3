@@ -14,7 +14,7 @@ import com.example.slide5.sqlite.EmployeeDao;
 
 public class AddOrEditEmployeeActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText etEmployeeId, etName, etSalary;
-    private Button btnSave;
+    private Button btnSave, btnListEmployee;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,32 +23,15 @@ public class AddOrEditEmployeeActivity extends AppCompatActivity implements View
         etEmployeeId = findViewById(R.id.etEmployeeId);
         etName = findViewById(R.id.etName);
         etSalary = findViewById(R.id.etSalary);
-
         btnSave = findViewById(R.id.btnSave);
+        btnListEmployee = findViewById(R.id.btnListEmployee);
         btnSave.setOnClickListener(this);
+        btnListEmployee.setOnClickListener(this);
 
-        findViewById(R.id.btnListEmployee).setOnClickListener(this);
 
-        readEmployee();
     }
 
-    public void readEmployee(){
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("data");
-        if(bundle == null){
-            return;
-        }
-        String id = bundle.getString("id");
 
-        EmployeeDao dao = new EmployeeDao(this);
-        Employee emp = dao.getById(id);
-
-        etEmployeeId.setText(emp.getId());
-        etName.setText(emp.getName());
-        etSalary.setText(""+ emp.getSalary());
-
-        btnSave.setText("update");
-    }
 
     @Override
     public void onClick(View view) {
@@ -63,13 +46,14 @@ public class AddOrEditEmployeeActivity extends AppCompatActivity implements View
 
                 if (btnSave.getText().equals("Save")){
                     dao.insert(emp);
-                }else{
-                    dao.update(emp);
                 }
 
                 dao.insert(emp);
                 Toast.makeText(this, "New employee has been saved", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.btnListEmployee:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
         }
 
     }

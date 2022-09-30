@@ -49,6 +49,7 @@ public class EmloyeeAdapter extends BaseAdapter {
         TextView tvSalary = view.findViewById(R.id.tvSalary);
 
         Employee emp = list.get(i);
+
         tvName.setText(emp.getName());
         tvSalary.setText(""+ emp.getSalary());
 

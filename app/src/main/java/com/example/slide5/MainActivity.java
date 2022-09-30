@@ -30,11 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        DBHelper dbHelper = new DBHelper(this);
-//        SQLiteDatabase database = dbHelper.getReadableDatabase();
-//        database.close();
-
-        findViewById(R.id.btnEdit).setOnClickListener(this);
         findViewById(R.id.btnDelete).setOnClickListener(this);
         findViewById(R.id.btnInsert).setOnClickListener(this);
 
@@ -75,27 +70,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnInsert:
                 startActivity(intent);
                 break;
-            case R.id.btnEdit:
+
+            case R.id.btnDelete:
                 if(employeeId == null) {
                     Toast.makeText(this, "Employee id must be selected", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Bundle bundle = new Bundle();
-                bundle.putString("id", employeeId);
-                intent.putExtra("data",bundle);
-                startActivity(intent);
-                break;
-            case R.id.btnDelete:
-                if(employeeId == null){
-                    Toast.makeText(this, "Employee id must be selected", Toast.LENGTH_SHORT).show();
-                    EmployeeDao dao = new EmployeeDao(this);
-                    dao.delete(employeeId);
-                    employeeId = null;
 
-                    onResume();
-                    Toast.makeText(this, "Employee was delete", Toast.LENGTH_SHORT).show();
-                    break;
-                }
+                EmployeeDao dao = new EmployeeDao(this);
+                dao.delete(employeeId);
+                employeeId = null;
+
+                onResume();
+                Toast.makeText(this, "Employee was delete", Toast.LENGTH_SHORT).show();
+                break;
+
         }
     }
 }
